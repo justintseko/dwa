@@ -1,3 +1,5 @@
+environment.php
+
 #################
 ## Eclipse
 #################
@@ -15,7 +17,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
-environment.php
+
 
 # External tool builders
 .externalToolBuilders/
