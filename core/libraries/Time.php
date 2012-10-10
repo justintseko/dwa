@@ -23,8 +23,6 @@ class Time {
 	-------------------------------------------------------------------------------------------------*/
 	public static function display($timestamp, $time_format = NULL) {
 	
-	date_default_timezone_set('America/New_York');
-	
 		# Avoid printing December 31 1969 if there is no timestamp
 		if($timestamp <= 0) {
 			return "";
