@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+
 <form method='POST' action='/users/p_signup'>
 
 	First Name<br>
@@ -19,3 +29,6 @@
 	<input type='submit'>
 
 </form> 
+</body>
+
+</html>

@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+
 <form method='POST' action='/users/p_login'>
 
 	Email<br>
@@ -13,3 +23,7 @@
 	<input type='submit'>
 
 </form>
+
+</body>
+
+</html>
