@@ -1,5 +1,4 @@
 <?php
-
 class base_controller {
 	
 	public $user;
@@ -7,9 +6,6 @@ class base_controller {
 	public $template;
 	public $email_template;
 
-	/*-------------------------------------------------------------------------------------------------
-	
-	-------------------------------------------------------------------------------------------------*/
 	public function __construct() {
 	
 		# Instantiate User class
