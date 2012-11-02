@@ -72,14 +72,11 @@ class User {
 	/*-------------------------------------------------------------------------------------------------
 	Returns token or false
 	-------------------------------------------------------------------------------------------------*/
-	public function login($email, $password, $timezone = NULL) {
+	public function login($email, $password) {
 				
 		# Hash password
 		$password = sha1(PASSWORD_SALT.$password);
 		
-		DB::instance(DB_NAME)->sanitize($email);
-		DB::instance(DB_NAME)->sanitize($password);
-				
 		# See if we can login
 		$q = "SELECT token 
 			FROM users 
@@ -95,7 +92,7 @@ class User {
 		
 			# Update their timezone on login
 			if(@$_POST['timezone'])
-				DB::instance(DB_NAME)->update("users", Array("timezone" => $timezone), "WHERE token = '".$token."'");
+				DB::instance(DB_NAME)->update("users", Array("timezone" => $_POST['timezone']), "WHERE token = '".$token."'");
 					
 			return $token;
 		}
@@ -232,8 +229,6 @@ class User {
 	-------------------------------------------------------------------------------------------------*/
 	public function reset_password($email) {
 		
-		$email = DB::instance(DB_NAME)->sanitize($email);
-		
 		# Do we have a user with that email?
 		$user_id = DB::instance(DB_NAME)->select_field("SELECT user_id FROM users WHERE email = '".$email."'");
 		
@@ -295,8 +290,6 @@ class User {
 	
 	-------------------------------------------------------------------------------------------------*/
 	public function confirm_unique_email($email) {
-	
-		$email = DB::instance(DB_NAME)->sanitize($email);
 	
 		$user_id = DB::instance(DB_NAME)->select_row("SELECT user_id FROM users WHERE email = '".$email."'");
 	
