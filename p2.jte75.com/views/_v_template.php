@@ -9,13 +9,15 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
 				
-	<!-- Controller Specific JS/CSS -->
-	<?php echo @$client_files; ?>
+	<link href="/views/style.css" rel="stylesheet" type="text/css">
 	
 </head>
 
 <body>	
 
+	<h1>YouTwit</h1>
+
+	<div class="maintext">
 	<div id='menu'>
 	
 		<!-- Menu for users who are logged in -->
@@ -39,5 +41,5 @@
 	<br>
 
 	<?=$content;?> 
-
+	</div>
 </body>
