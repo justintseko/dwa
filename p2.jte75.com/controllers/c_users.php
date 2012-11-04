@@ -39,6 +39,26 @@ class users_controller extends base_controller {
 		
 	}
 	
+	public function insert($table, $data) {
+					
+	// setup insert statement
+	$sql = "INSERT INTO $table SET";
+
+	// add columns and values
+	foreach ($data as $column => $value)
+		$sql .= " $column = '".mysql_real_escape_string($value)."',";
+
+	// remove trailing comma
+	$sql = substr($sql, 0, -1);
+
+	// perform query
+	$this->query($sql);
+
+	// return auto_increment id
+	return mysql_insert_id();
+
+}
+	
 	public function login($error = NULL) {
 		
 		# Set up the view
