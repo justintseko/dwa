@@ -27,10 +27,6 @@ class users_controller extends base_controller {
 		$_POST['created']  = Time::now();
 		$_POST['modified'] = Time::now();
 		$_POST['token']    = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
-
-		
-		# Dump out the results of POST to see what the form submitted
-		print_r($_POST);
 		
 		#Put the data in the database
 		DB::instance(DB_NAME)->insert('users', $_POST);
@@ -38,6 +34,7 @@ class users_controller extends base_controller {
 		echo "You are registered!";
 		
 	}
+
 	
 	public function insert($table, $data) {
 					
