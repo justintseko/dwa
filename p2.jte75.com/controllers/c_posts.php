@@ -65,6 +65,7 @@ public function index() {
 	
 	# Remove the final comma 
 	$connections_string = substr($connections_string, 0, -1);
+	
 
 	# Now, lets build our query to grab the posts
 	$q = "SELECT * 
@@ -80,6 +81,7 @@ public function index() {
 	
 	# Render view
 	echo $this->template;
+
 
 }
 	

@@ -6,7 +6,7 @@ class users_controller extends base_controller {
 	} 
 	
 	public function index() {
-		echo "Welcome to the users's department";
+		Router::redirect("/");
 	}
 	
 	public function signup() {
