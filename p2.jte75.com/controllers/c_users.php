@@ -31,7 +31,7 @@ class users_controller extends base_controller {
 		#Put the data in the database
 		DB::instance(DB_NAME)->insert('users', $_POST);
 		
-		echo "You are registered!";
+		Router::redirect("/");
 		
 	}
 
