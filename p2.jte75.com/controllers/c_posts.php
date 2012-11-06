@@ -42,48 +42,47 @@ class posts_controller extends base_controller {
 	}
 
 
-public function index() {
+	public function index() {
 	
-	# Set up view
-	$this->template->content = View::instance('v_posts_index');
-	$this->template->title   = "Posts";
+		# Set up view
+		$this->template->content = View::instance('v_posts_index');
+		$this->template->title   = "Posts";
+		
+		# Build a query of the users this user is following - we're only interested in their posts
+		$q = "SELECT * 
+			FROM users_users
+			WHERE user_id = ".$this->user->user_id;
+		
+		# Execute our query, storing the results in a variable $connections
+		$connections = DB::instance(DB_NAME)->select_rows($q);
+		
+		# In order to query for the posts we need, we're going to need a string of user id's, separated by commas
+		# To create this, loop through our connections array
+		$connections_string = "";
+		foreach($connections as $connection) {
+			$connections_string .= $connection['user_id_followed'].",";
+		}
+		
+		# Remove the final comma 
+		$connections_string = substr($connections_string, 0, -1);
+		
 	
-	# Build a query of the users this user is following - we're only interested in their posts
-	$q = "SELECT * 
-		FROM users_users
-		WHERE user_id = ".$this->user->user_id;
-	
-	# Execute our query, storing the results in a variable $connections
-	$connections = DB::instance(DB_NAME)->select_rows($q);
-	
-	# In order to query for the posts we need, we're going to need a string of user id's, separated by commas
-	# To create this, loop through our connections array
-	$connections_string = "";
-	foreach($connections as $connection) {
-		$connections_string .= $connection['user_id_followed'].",";
+		# Now, lets build our query to grab the posts
+		$q = "SELECT * 
+			FROM posts 
+			JOIN users USING (user_id)
+			WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
+					
+		# Run our query, store the results in the variable $posts
+		$posts = DB::instance(DB_NAME)->select_rows($q);
+		
+		# Pass data to the view
+		$this->template->content->posts = $posts;
+		
+		# Render view
+		echo $this->template;
+
 	}
-	
-	# Remove the final comma 
-	$connections_string = substr($connections_string, 0, -1);
-	
-
-	# Now, lets build our query to grab the posts
-	$q = "SELECT * 
-		FROM posts 
-		JOIN users USING (user_id)
-		WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
-				
-	# Run our query, store the results in the variable $posts
-	$posts = DB::instance(DB_NAME)->select_rows($q);
-	
-	# Pass data to the view
-	$this->template->content->posts = $posts;
-	
-	# Render view
-	echo $this->template;
-
-
-}
 	
 	public function users() {
 	
@@ -114,7 +113,7 @@ public function index() {
 
 		# Render the view
 		echo $this->template;
-}
+	}
 
 	public function follow($user_id_followed) {
 	
@@ -130,7 +129,7 @@ public function index() {
 			
 		#Send them back
 		Router::redirect("/posts/users");
-}
+	}
 
 	public function unfollow ($user_id_followed) {
 		
@@ -140,7 +139,7 @@ public function index() {
 		
 		#Send them back
 		Router::redirect("/posts/users");
-}
+	}
 
 	public function viewuser($user_id) {
 	
@@ -161,7 +160,7 @@ public function index() {
 		
 		# Render view
 		echo $this->template;
-}
+	}
 	
 	public function viewpost($post_id) {
 		
@@ -180,6 +179,6 @@ public function index() {
 		
 		# Render view
 		echo $this->template;
-}
+	}
 
 }
