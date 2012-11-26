@@ -1,0 +1,66 @@
+body {
+background-color: #96C;
+}
+
+.colorbox {
+height: 70px;
+width: 70px;
+float:left;
+margin: 10px;
+border: 3px;
+}
+
+h2,p {
+margin-left:20px;
+font-family:Tahoma, Geneva, sans-serif;
+color:#FF9
+}
+
+#red {
+background-color: red;
+}
+
+#vermillion {
+background-color: #E04235;
+}
+
+#orange {
+background-color: #FF7F00;
+}
+
+#amber {
+background-color: #FFBE00;
+}
+
+#yellow {
+background-color: yellow;
+}
+
+#chartreuse {
+background-color: #6F0
+}
+
+#green {
+background-color: green;
+}
+
+#aquamarine {
+background-color: #0F9
+}
+
+#blue {
+background-color: blue;
+}
+
+#indigo {
+background-color: #468000;
+}
+
+#purple {
+background-color: #808;
+}
+
+
+#magenta {
+background-color: #F0F;
+}
