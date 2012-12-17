@@ -6,8 +6,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	
 	<!-- JS -->
-	<script src="/js/script.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script src="/js/script.js"></script>	
 				
 	<link href="/views/style.css" rel="stylesheet" type="text/css">
 	

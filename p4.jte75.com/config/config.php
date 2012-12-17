@@ -32,7 +32,7 @@ A email designated to receive messages from the server. Examples:
 	define('SYSTEM_EMAIL', 'webmaster@myapp.com'); 
 
 # Default DB name for this app
-	define('DB_NAME', "jtecom_p2_jte75_com"); 
+	define('DB_NAME', "jtecom_p4_jte75_com"); 
 
 
 # If your app is going to have outgoing emails, you should fill in your SMTP settings

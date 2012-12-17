@@ -2,84 +2,86 @@
 
 class news_controller extends base_controller {
 
-  public function __construct() {	
-		parent::__construct();	
+	public function __construct() {
+		parent::__construct();
+		
+		# Make sure user is logged in if they want to use anything in this controller
+		if(!$this->user) {
+			die("Members only. <a href='/users/login'>Login</a>");
+		}
+
 	}
-	
-	
-	/*-------------------------------------------------------------------------------------------------
-	Loads the initial form that lets you choose your news source
-	-------------------------------------------------------------------------------------------------*/
-	public function load() {	
+
+	public function createnew() {
 	
 		# Setup view
-			$this->template->content = View::instance('v_news_load');
-			$this->template->title   = "Choose an news source to load";
+		$this->template->content = View::instance('v_news_createnew');
+		$this->template->title   = "Create a new splash";
 			
 		# Render template
-			echo $this->template;
-		
+		echo $this->template;
 	
 	}
 	
-	
-	/*-------------------------------------------------------------------------------------------------
-	This is what gets called by ajax and grabs the news
-	-------------------------------------------------------------------------------------------------*/
-	public function p_load() {
-	
-		// Taken from getrss.php on http://www.w3schools.com/php/php_ajax_rss_reader.asp
-					
-		//get the q parameter from URL
-		$q=$_POST["q"];
-		
-		//find out which feed was selected
-		if($q=="Google")
-		  {
-		  $xml=("http://news.google.com/news?ned=us&topic=h&output=rss");
-		  }
-		elseif($q=="MSNBC")
-		  {
-		  $xml=("http://rss.msnbc.msn.com/id/3032091/device/rss/rss.xml");
-		  }
-		
-		$xmlDoc = new DOMDocument();
-		$xmlDoc->load($xml);
-		
-		//get elements from "<channel>"
-		$channel=$xmlDoc->getElementsByTagName('channel')->item(0);
-		$channel_title = $channel->getElementsByTagName('title')
-		->item(0)->childNodes->item(0)->nodeValue;
-		$channel_link = $channel->getElementsByTagName('link')
-		->item(0)->childNodes->item(0)->nodeValue;
-		$channel_desc = $channel->getElementsByTagName('description')
-		->item(0)->childNodes->item(0)->nodeValue;
-		
-		//output elements from "<channel>"
-		echo("<p><a href='" . $channel_link
-		  . "'>" . $channel_title . "</a>");
-		echo("<br>");
-		echo($channel_desc . "</p>");
-		
-		//get and output "<item>" elements
-		$x=$xmlDoc->getElementsByTagName('item');
-		for ($i=0; $i<=2; $i++)
-		  {
-		  $item_title=$x->item($i)->getElementsByTagName('title')
-		  ->item(0)->childNodes->item(0)->nodeValue;
-		  $item_link=$x->item($i)->getElementsByTagName('link')
-		  ->item(0)->childNodes->item(0)->nodeValue;
-		  $item_desc=$x->item($i)->getElementsByTagName('description')
-		  ->item(0)->childNodes->item(0)->nodeValue;
-		
-		  echo ("<p><a href='" . $item_link
-		  . "'>" . $item_title . "</a>");
-		  echo ("<br>");
-		  echo ($item_desc . "</p>");
-		  }
-	
-	}
+	public function p_createnew() {
 			
+		# Associate this post with this user
+		$_POST['user_id']  = $this->user->user_id;
+		
+		# Unix timestamp of when this post was created / modified
+		$_POST['created']  = Time::now();
+		$_POST['modified'] = Time::now();
+		
+		# Insert
+		# Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
+		DB::instance(DB_NAME)->insert('splashes', $_POST);
+		
+		# Quick and dirty feedback
+		echo "Your post has been added. <a href='/posts/index'>Back to posts</a>";
+
+	}
+
+
+	public function index() {
 	
+		# Set up view
+		$this->template->content = View::instance('v_news_index');
+		$this->template->title   = "Splash";
+		
+		# Build a query of the users this user is following - we're only interested in their posts
+		$q = "SELECT * 
+			FROM users_users
+			WHERE user_id = ".$this->user->user_id;
+		
+		# Execute our query, storing the results in a variable $connections
+		$connections = DB::instance(DB_NAME)->select_rows($q);
+		
+		# In order to query for the posts we need, we're going to need a string of user id's, separated by commas
+		# To create this, loop through our connections array
+		$connections_string = "";
+		foreach($connections as $connection) {
+			$connections_string .= $connection['user_id_followed'].",";
+		}
+		
+		# Remove the final comma 
+		$connections_string = substr($connections_string, 0, -1);
+		
 	
-} // end class
+		# Now, lets build our query to grab the posts
+		$q = "SELECT * 
+			FROM posts 
+			JOIN users USING (user_id)
+			WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
+					
+		# Run our query, store the results in the variable $posts
+		$posts = DB::instance(DB_NAME)->select_rows($q);
+		
+		# Pass data to the view
+		$this->template->content->posts = $posts;
+		
+		# Render view
+		echo $this->template;
+
+	}
+	
+}

@@ -1,21 +1,15 @@
-function showRSS(str)
-{
-if (str.length==0)
-  { 
-  document.getElementById("rssOutput").innerHTML="";
-  return;
-  }
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("rssOutput").innerHTML=xmlhttp.responseText;
-    }
-  }
-xmlhttp.open("GET","/news/p_load?q="+str,true);
-xmlhttp.send();
+google.load("feeds", "1");
+
+function OnLoad() {
+  // Create a feed control
+  var feedControl = new google.feeds.FeedControl();
+
+  // Add two feeds.
+  feedControl.addFeed("http://www.digg.com/rss/index.xml", "Digg");
+  feedControl.addFeed("http://feeds.feedburner.com/Techcrunch", "TechCrunch");
+
+  // Draw it.
+  feedControl.draw(document.getElementById("content"));
 }
+
+google.setOnLoadCallback(OnLoad);
