@@ -23,9 +23,8 @@
 		<? if($user): ?>
 			
 			<a href='/users/logout'>Logout</a>
-			<a href='/posts/users/'>Change who you're following</a>
-			<a href='/posts/'>View posts</a>
-			<a href='/posts/add'>Add a new post</a>
+			<a href='/news/createnew/'>Create a new news</a>
+			<a href='/news/'>View news pages</a>
 		
 		<!-- Menu options for users who are not logged in -->	
 		<? else: ?>
