@@ -1,24 +1,23 @@
 h1	{
-color: #ddd;
+color: #333;
 margin: 0%;
 font-size: 500%;
 font-style: normal;
 font-variant: normal;
 font-weight: 100;
-font-family: Helvetica, Arial, sans-serif;
 }
 
 body	{
-background-color: #2C4762;
+background-color: #ddd;
+font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
 }
 
 .maintext	{
-background-color: #4C6782;
+background-color: #fff;
 color: #444;
 border: 1px solid;
 border-radius: 7px;
 padding: 5px 10px;
-font-family: Helvetica, Arial, sans-serif;
 font-size: 14px;
 font-style: normal;
 font-variant: normal;
@@ -26,9 +25,12 @@ font-weight: normal;
 line-height: 1.4;
 }
 
+li {
+list-style-type: none;
+}
 
 
-a:link {text-decoration:none; color: #222; background-color: #ddd; border: 2px solid; border-radius: 3px;}
+a:link {text-decoration:none; color: #222; background-color: #ddd; border: 1px solid; border-radius: 3px;}
 a:visited {text-decoration:none; color: black; background-color: #ccc;}
 a:hover {text-decoration:underline; color: black; background-color: #ccc;}
 a:active {text-decoration:underline; color: black; background-color: #ccc;}

@@ -1,7 +1,5 @@
 <? if(!$user): ?>
-	Welcome stranger<br>
-	<a href='/users/login'>Login</a> | 
-	<a href='/users/signup'>Signup</a>
+	Welcome stranger! Please log in or sign up<br>
 <? else: ?>
 	Welcome back <?=$user->first_name?><br>
 	<a href='/users/logout'>Logout</a>

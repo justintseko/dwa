@@ -16,6 +16,8 @@
 
 <body>	
 
+<h1>My News</h1>
+
 	<div class="maintext">
 	<div id='menu'>
 	
