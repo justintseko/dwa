@@ -31,10 +31,26 @@ class users_controller extends base_controller {
 		#Put the data in the database
 		DB::instance(DB_NAME)->insert('users', $_POST);
 		
+		# Search the db for this email and password
+		# Retrieve the token if it's available
+		$q = "SELECT token 
+			FROM users 
+			WHERE email = '".$_POST['email']."' 
+			AND password = '".$_POST['password']."'";
+		
+		$token = DB::instance(DB_NAME)->select_field($q);	
+					
+		# Login failed
+		if($token == "") {
+		Router::redirect("/users/login/error"); # Note the addition of the parameter "error"
+	}
+		# Login passwed
+		else {
+		setcookie("token", $token, strtotime('+2 weeks'), '/');
 		Router::redirect("/");
 		
 	}
-
+}
 	
 	public function insert($table, $data) {
 					
