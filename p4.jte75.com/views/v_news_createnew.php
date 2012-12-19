@@ -1,5 +1,7 @@
 <form method='POST' action='/news/p_createnew'>
 
+<p>Name your new newspage, then add feeds (remember to use the URL of the RSS feed you want to follow, not the URL of the site)</p>
+
 	News name: <input type="text" name="news_name"><br>
 	Feed name: <input type="text" name="feed_1_name">
 	Feed URL: <input type="text" name="feed_1_url"><br>

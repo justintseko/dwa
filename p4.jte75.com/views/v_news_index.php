@@ -1,7 +1,8 @@
+<h2>My NewsPages</h2>
+<ul>
 <? foreach($news as $key => $news): ?>
 	
-	<a href='/news/viewnews/<?=$news['news_id']?>'><?=$news['news_name']?></a></h2>
-	
-	<br><br>
+	<li><a href='/news/viewnews/<?=$news['news_id']?>'><?=$news['news_name']?></a><li>
 	
 <? endforeach; ?>
+</ul>
